@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Resume website of Jirawut Rueangprom, Frontend Developer."
+    />
+    <title>Jirawut Rueangprom | Frontend Developer</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <main id="app" v-cloak>
+      <nav class="topbar" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Back to top">
+          <strong>{{ person.englishName }}</strong>
+        </a>
+
+        <div class="nav-links">
+          <a v-for="item in navItems" :key="item.href" :href="item.href">
+            {{ item.label }}
+          </a>
+        </div>
+      </nav>
+
+      <header id="top" class="hero">
+        <aside class="hero-visual" aria-label="Profile photo">
+          <div class="photo-frame">
+            <img :src="person.profileImage" :alt="person.name" />
+          </div>
+        </aside>
+
+        <section class="hero-copy">
+          <h1>
+            I'M
+            <span>{{ person.englishName }}</span>
+          </h1>
+
+          <div class="hero-actions">
+            <a class="read-more" href="#profile">READ MORE</a>
+            <a class="ghost-action" :href="`mailto:${person.email}`">CONTACT</a>
+          </div>
+        </section>
+      </header>
+
+      <section id="profile" class="section about-section">
+        <div class="section-label">
+          <span>01</span>
+          <p>About Me</p>
+        </div>
+
+        <div class="about-grid">
+          <article>
+            <h2>สร้างเว็บที่ดูดี ใช้งานง่าย และพร้อมต่อยอด</h2>
+            <p>{{ person.profile }}</p>
+          </article>
+
+          <div class="fact-list">
+            <div v-for="fact in facts" :key="fact.label">
+              <span>{{ fact.label }}</span>
+              <strong>{{ fact.value }}</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" class="section education-section">
+        <div class="section-label">
+          <span>02</span>
+          <p>Education</p>
+        </div>
+
+        <div class="education-list">
+          <div v-for="(edu, index) in educations" :key="index" class="education-layout">
+            <figure class="education-logo">
+              <img :src="edu.logo" :alt="edu.university" />
+            </figure>
+
+            <article class="education-copy">
+              <p class="card-kicker">Education</p>
+              <h3>{{ edu.degree }}</h3>
+              <strong v-if="edu.major">{{ edu.major }}</strong>
+              <span>{{ edu.university }}</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section experience-section">
+        <div class="section-label">
+          <span>03</span>
+          <p>Experience</p>
+        </div>
+
+        <div class="timeline">
+          <article v-for="item in experiences" :key="item.role" class="timeline-item">
+            <div class="timeline-content">
+              <h3>{{ item.place }}</h3>
+              <div class="timeline-meta">
+                <strong>{{ item.role }}</strong>
+                <span>{{ item.periodDate }}</span>
+              </div>
+              <span v-if="item.description">{{ item.description }}</span>
+              <div v-if="item.details && item.details.length" class="timeline-details">
+                <strong>{{ item.detailsTitle }}</strong>
+                <ul>
+                  <li v-for="detail in item.details" :key="detail">{{ detail }}</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="training" class="section training-section">
+        <div class="section-label">
+          <span>04</span>
+          <p>Training & Certifications</p>
+        </div>
+
+        <div class="training-grid">
+          <article v-for="item in trainings" :key="item.title" class="training-card">
+            <div class="cert-image-wrapper">
+              <img :src="item.image" :alt="item.title" loading="lazy" />
+            </div>
+            <div class="training-info">
+              <p class="cert-date">{{ item.date }}</p>
+              <h3>{{ item.title }}</h3>
+              <span class="cert-issuer">{{ item.issuer }}</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="work" class="section work-section">
+        <div class="section-label">
+          <span>05</span>
+          <p>Selected Work</p>
+        </div>
+
+        <div class="work-grid">
+          <article v-for="work in workSamples" :key="work.title" class="work-card">
+            <p>{{ work.type }}</p>
+            <h3>{{ work.title }}</h3>
+            <span>{{ work.description }}</span>
+            <div class="tag-list">
+              <small v-for="tag in work.stack" :key="tag">{{ tag }}</small>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section skills-section">
+        <div class="section-label">
+          <span>06</span>
+          <p>Skills</p>
+        </div>
+
+        <div class="skills-layout">
+          <article v-for="group in skillGroups" :key="group.title" class="skill-card">
+            <h3>{{ group.title }}</h3>
+            <div>
+              <span v-for="skill in group.skills" :key="skill">{{ skill }}</span>
+            </div>
+          </article>
+
+          <article class="language-card">
+            <h3>Language</h3>
+            <div v-for="language in languages" :key="language.name" class="language-row">
+              <div>
+                <strong>{{ language.name }}</strong>
+                <span>{{ language.value }}</span>
+              </div>
+              <div class="progress" :aria-label="`${language.name} ${language.level}%`">
+                <span :style="{ width: `${language.level}%` }"></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="contact-panel">
+          <div class="contact-left">
+            <div class="section-label compact">
+              <span>07</span>
+              <p>Contact</p>
+            </div>
+            <address class="contact-address">
+              <span v-for="line in address" :key="line">{{ line }}</span>
+            </address>
+          </div>
+
+          <div class="contact-right">
+            <div v-for="contact in contacts" :key="contact.label" class="contact-item">
+              <span>{{ contact.label }}</span>
+              <a :href="contact.href">
+                <strong>{{ contact.value }}</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./node_modules/vue/dist/vue.global.prod.js"></script>
+    <script src="./src/standalone-app.js"></script>
+  </body>
+</html>
